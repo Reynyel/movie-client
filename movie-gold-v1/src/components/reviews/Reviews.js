@@ -23,7 +23,7 @@ const Reviews = ({getMovieData, movie, reviews, setReviews}) => {
         try{
             const response = await api.post("/api/v1/reviews", {reviewBody:rev.value,imdbId:movieId});
     
-            const updatedReviews = [response,{body:rev.value}];
+            const updatedReviews = Array.isArray(reviews) ? [...reviews, { body: rev.value }] : [{ body: rev.value }];
             rev.value = "";
     
             setReviews(updatedReviews);
@@ -64,12 +64,11 @@ const Reviews = ({getMovieData, movie, reviews, setReviews}) => {
                             <Row>
                                 <Col>{r.body}</Col>
                             </Row>
-
                             <Row>
-                        <Col>
-                            <hr/>                       
-                        </Col>
-                    </Row>
+                                <Col>
+                                    <hr />
+                                </Col>
+                            </Row>                                
                         </>
                     )
                 })
@@ -83,6 +82,6 @@ const Reviews = ({getMovieData, movie, reviews, setReviews}) => {
         </Row>
     </Container>
   )
-};
+}
 
 export default Reviews;
